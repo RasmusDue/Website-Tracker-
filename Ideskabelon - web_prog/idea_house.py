@@ -6,7 +6,8 @@ from flask import session
 from flask import redirect
 from flask import url_for
 import matplotlib.pyplot as plt
-
+import io
+from flask import send_file
 
 from idea_datalayer import IdeaData
 
@@ -166,9 +167,9 @@ def login_user():
         session.pop('currentuser', None)
         return my_render('login.html', success = False)
 
-@app.route('/fig/<figure_key>')
-def fig(figure_key):
-    plt.title(figure_key)
+@app.route('/fig/')
+def fig():
+    plt.title("figure_key")
     plt.plot([1,2,3,4], [1,3,2,4])
     img = io.BytesIO()
     plt.savefig(img)
