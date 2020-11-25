@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if loggedin == True %}
+<div class="form-group">
+  <form class="form-control" action="/nyide" method="post">
+    <h1>Opret Ny Tracker</h1>
+    <label class="form-control-static" for="text">Insæt navn:</label>
+    <input type="text" name="navn" id="navn" tabindex="1" class="form-control" placeholder="navn" value=""  required>
+    <label class="form-control-static" for="text">Hvad vil du tracke?</label>
+    <br>
+    <input type="radio" id="tal" name="input" value="tal"  required>
+    <label for="tal">Tal</label>
+    <input type="radio" id="tekst" name="input" value="tekst"  required>
+    <label for="tekst">Tekst</label>
+    <input type="radio" id="emoji" name="input" value="emoji"  required>
+    <label for="emoji">Emoji</label>
+    <br>
+    <label class="form-control-static" for="text">Hvordan vil du have dataen præsenteret?</label>
+    <br>
+    <input type="radio" id="graf" name="view" value="graf"  required>
+    <label for="graf">Graf</label>
+    <input type="radio" id="søjle" name="view" value="søjle"  required>
+    <label for="søjle">Søjlediagram</label>
+    <input type="radio" id="cirkel" name="view" value="cirkle"  required>
+    <label for="cirkel">Cirkeldiagram</label>
+    <button class="form-control" type="submit" name="button">Opret</button>
+  </form>
+</div>
+
+
+
+{% endif %}
+{% endblock content %}

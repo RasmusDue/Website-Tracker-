@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+{% if loggedin == True %}
+<h1>My Tracker Home Page</h1>
+<div class="form-group">
+  <form class="form-control" action="/nyide" method="post">
+    <img src="{{ url_for('static', filename='water.jpg')}}" alt="Water" width="100%">
+  </form>
+</div>
+
+{% endif %}
+{% endblock content %}
