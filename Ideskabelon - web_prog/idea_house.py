@@ -15,6 +15,8 @@ app = Flask(__name__)
 app.secret_key = 'very secret string'
 
 data = None
+update = False
+show = True
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -79,34 +81,32 @@ def nyide():
 
     return redirect("/profil")
 
-# @app.route("/visideer", methods=['GET'])
-# def vis():
-#     if 'currentuser' in session:
-#         if 'id' in request.args:
-#             #ideer = data.get_idea_list(session['currentuser'], ideaid = request.args['id'])
-#             tracker_list = data.get_tracker_list(session['currentuser'], trackerid = request.args['id'])
-#         else:
-#             #ideer = data.get_idea_list(session['currentuser'])
-#             tracker_list = data.get_tracker_list(session['currentuser'])
-#
-#     else:
-#         #ideer = []
-#         tracker_list = []
-#
-#     #return my_render("vis.html", ideas = ideer, trackers = tracker_list)
-#     return my_render("vis.html", trackers = tracker_list)
 
 @app.route("/vistracker", methods=['GET'])
 def vis_tracker():
     if 'currentuser' in session:
         if 'id' in request.args:
             tracker = data.get_tracker_list(session['currentuser'], trackerid = request.args['id'])
+            # if show == True:
+            #     input = request.form['input']
+            #     print(input)
+            show = False
+            var = "text"
+            # update = request.form['update']
         else:
             tracker = data.get_tracker_list(session['currentuser'])
-
+            show = True
+            var = False
+            update = False
     else:
         tracker = []
-    return my_render("vis.html", trackers = tracker)
+    return my_render("vis.html", trackers = tracker, show_but=show, type_var=var)
+
+@app.route("/update_table", methods=['GET'])
+def update_table():
+    input = request.form['input']
+    print(input)
+    return redirect("/vistracker")
 
 @app.route("/register")
 def register():

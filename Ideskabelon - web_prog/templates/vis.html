@@ -4,19 +4,31 @@
 <h1>Dine Trackers</h1>
 <div class="container panel">
   {% for i in trackers %}
-  <article class="media content-section">
+  <article class="media content-section" action="/vistracker?id={{ i['id'] }}" method="post">
     <div class="media-body">
       <p class="article-content">
         {{ i['navn'] }}
       </p>
       <img src="/fig" alt="" width="100%">
-      <form class="form-control" action="vistracker" method="get">
-          <button class="form-control" name="id" value="{{ i['id'] }}" type="submit">Se mere</button>
+      {% if show_but %}
+      <a href="/vistracker?id={{ i['id'] }}">Klik for at gå til tracker</a>
+      <!---<form class="form-control" action="vistracker" method="get">
+          <button class="form-control" name="id" value="{{ i['id'] }}" type="submit">Nyt input</button>
+      </form>--->
+      {% endif %}
+      {% if not show_but %}
+      <form class="form-control" action="/vistracker?id={{ i['id'] }}" method="post">
+        <label class="form-control-static" for="text">Indtast måledata:</label>
+        <input type="{{ type_var }}" name="input" id="input" tabindex="1" class="form-control" placeholder="1234" value=""  required>
+        <!-- <a href="/update_table" method="post" >Send Data</a> -->
+        <button class="form-control" type="submit" name="button">Send Data</button>
       </form>
+      {% endif %}
 
     </div>
   </article>
   {% endfor %}
+
 
 <!-- </div>
 
