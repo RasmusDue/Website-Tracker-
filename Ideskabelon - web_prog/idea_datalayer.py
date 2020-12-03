@@ -130,6 +130,27 @@ class IdeaData():
         print(tracker_list)
         return tracker_list
 
+    def add_track_data(self, input, id):
+        db = self._get_db()
+        c = db.cursor()
+        c.execute("INSERT INTO Observation (value, varid) VALUES (?,?)", (input,id))
+        db.commit()
+
+    def get_graf_list(self, varid):
+        db = self._get_db()
+        c = db.cursor()
+        print("varid: {}".format(varid))
+        #c.execute("SELECT value FROM Observation WHERE varid = ?", varid)
+        #c.execute("""SELECT value, timestamp FROM Observation""", [varid])
+        c.execute("SELECT value, timestamp FROM Observation""")
+        print(c)
+        graf_list = []
+        for i in c:
+            graf_list.append({'value':i[0], 'timestamp':i[1]})
+        print("graf_list: {}".format(graf_list))
+        return graf_list
+
+
 #Tabel Observation
 
 
@@ -175,7 +196,7 @@ class IdeaData():
         try:
             c.execute("""CREATE TABLE Observation (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                values INTEGER,
+                value INTEGER,
                 varid INTEGER,
                 timestamp DATETIME DEFAULT CURRENT_TIMESTAMP);""")
         except Exception as e:

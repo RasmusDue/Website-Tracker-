@@ -82,10 +82,18 @@ def nyide():
     return redirect("/profil")
 
 
-@app.route("/vistracker", methods=['GET'])
+@app.route("/vistracker", methods=['GET', 'POST'])
 def vis_tracker():
     if 'currentuser' in session:
         if 'id' in request.args:
+            if request.method == 'POST':
+                a_input = request.form['input']
+                a_id = request.args['id']
+                print(a_input)
+                print(a_id)
+                data.add_track_data(a_input, a_id)
+                graf = data.get_graf_list(a_id)
+
             tracker = data.get_tracker_list(session['currentuser'], trackerid = request.args['id'])
             # if show == True:
             #     input = request.form['input']
@@ -98,6 +106,9 @@ def vis_tracker():
             show = True
             var = False
             update = False
+        if 'input' in request.args:
+            print("input: {}".format(input))
+
     else:
         tracker = []
     return my_render("vis.html", trackers = tracker, show_but=show, type_var=var)
