@@ -13,6 +13,9 @@ class IdeaData():
         for u in c:
             print(u)
 
+        self.list_fig_1 = []
+        self.list_fig_2 = []
+
 
     def _get_db(self):
         db = g.get('_database', None)
@@ -146,7 +149,8 @@ class IdeaData():
         print(c)
         graf_list = []
         for i in c:
-            graf_list.append({'value':i[0], 'timestamp':i[1]})
+            graf_list.append({i[0], i[1]})
+            # graf_list.append({'value':i[0], 'timestamp':i[1]})
         print("graf_list: {}".format(graf_list))
         return graf_list
 

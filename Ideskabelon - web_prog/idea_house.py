@@ -17,6 +17,8 @@ app.secret_key = 'very secret string'
 data = None
 update = False
 show = True
+list_fig_1 = [10,2,3,40]
+list_fig_2 = [1,20,30,4]
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -95,12 +97,13 @@ def vis_tracker():
                 graf = data.get_graf_list(a_id)
 
             tracker = data.get_tracker_list(session['currentuser'], trackerid = request.args['id'])
-            # if show == True:
-            #     input = request.form['input']
-            #     print(input)
             show = False
             var = "text"
-            # update = request.form['update']
+            list_fig_1 = []
+            list_fig_2 = []
+            for i in data.get_graf_list(1):
+                data.list_fig_1.append(i[0])
+                data.list_fig_2.append(i[1])
         else:
             tracker = data.get_tracker_list(session['currentuser'])
             show = True
@@ -111,7 +114,7 @@ def vis_tracker():
 
     else:
         tracker = []
-    return my_render("vis.html", trackers = tracker, show_but=show, type_var=var)
+    return my_render("vis.html", trackers = tracker, show_but= show, type_var= var)
 
 @app.route("/update_table", methods=['GET'])
 def update_table():
@@ -181,7 +184,7 @@ def login_user():
 @app.route('/fig/')
 def fig():
     plt.title("figure_key")
-    plt.plot([1,2,3,4], [1,3,2,4])
+    plt.plot(list_fig_1, list_fig_2)
     img = io.BytesIO()
     plt.savefig(img)
     img.seek(0)
