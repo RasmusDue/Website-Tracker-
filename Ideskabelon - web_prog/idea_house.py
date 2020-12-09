@@ -5,7 +5,10 @@ from flask import render_template
 from flask import session
 from flask import redirect
 from flask import url_for
+import matplotlib
+# matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+
 import io
 from flask import send_file
 
@@ -17,8 +20,8 @@ app.secret_key = 'very secret string'
 data = None
 update = False
 show = True
-list_fig_1 = [10,2,3,40]
-list_fig_2 = [1,20,30,4]
+# list_fig_1 = [10,2,3,40]
+# list_fig_2 = [1,20,30,4]
 
 @app.teardown_appcontext
 def close_connection(exception):
@@ -86,8 +89,12 @@ def nyide():
 
 @app.route("/vistracker", methods=['GET', 'POST'])
 def vis_tracker():
+
     if 'currentuser' in session:
         if 'id' in request.args:
+            id = request.args['id']
+            data.get_graf_list(id)
+            fig()
             if request.method == 'POST':
                 a_input = request.form['input']
                 a_id = request.args['id']
@@ -96,14 +103,15 @@ def vis_tracker():
                 data.add_track_data(a_input, a_id)
                 graf = data.get_graf_list(a_id)
 
+
             tracker = data.get_tracker_list(session['currentuser'], trackerid = request.args['id'])
             show = False
             var = "text"
-            list_fig_1 = []
-            list_fig_2 = []
-            for i in data.get_graf_list(1):
-                data.list_fig_1.append(i[0])
-                data.list_fig_2.append(i[1])
+            # list_fig_1 = []
+            # list_fig_2 = []
+            # for i in data.get_graf_list(1):
+            #     data.list_fig_1.append(i[0])
+            #     data.list_fig_2.append(i[1])
         else:
             tracker = data.get_tracker_list(session['currentuser'])
             show = True
@@ -181,13 +189,23 @@ def login_user():
         session.pop('currentuser', None)
         return my_render('login.html', success = False)
 
-@app.route('/fig/')
+@app.route('/fig')
 def fig():
-    plt.title("figure_key")
-    plt.plot(list_fig_1, list_fig_2)
+    plt.title("palle1234_er_død")
+    x_list = []
+    y_list = []
+    for i in data.graf_list:
+        x_list.append(i['timestamp'])
+        y_list.append(i['value'])
+    print("_____")
+    print(x_list)
+    print(y_list)
+    plt.plot([1,2,3,4], [1,2,3,4])
+    plt.show()
     img = io.BytesIO()
     plt.savefig(img)
     img.seek(0)
+    print("_____opretter fig______")
     return send_file(img, mimetype='image/png')
 
 

@@ -9,7 +9,6 @@
       <p class="article-content">
         {{ i['navn'] }}
       </p>
-      <img src="/fig" alt="" width="100%">
       {% if show_but %}
       <a href="/vistracker?id={{ i['id'] }}">Klik for at gå til tracker</a>
       <!---<form class="form-control" action="vistracker" method="get">
@@ -17,6 +16,7 @@
       </form>--->
       {% endif %}
       {% if not show_but %}
+      <img src="/fig" alt="" width="100%">
       <form class="form-control" action="/vistracker?id={{ i['id'] }}" method="post">
         <label class="form-control-static" for="text">Indtast måledata:</label>
         <input type="{{ type_var }}" name="input" id="input" tabindex="1" class="form-control" placeholder="1234" value=""  required>

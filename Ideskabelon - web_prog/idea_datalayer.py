@@ -13,6 +13,7 @@ class IdeaData():
         for u in c:
             print(u)
 
+        self.graf_list = []
         self.list_fig_1 = []
         self.list_fig_2 = []
 
@@ -146,13 +147,12 @@ class IdeaData():
         #c.execute("SELECT value FROM Observation WHERE varid = ?", varid)
         #c.execute("""SELECT value, timestamp FROM Observation""", [varid])
         c.execute("SELECT value, timestamp FROM Observation""")
-        print(c)
-        graf_list = []
+        self.graf_list = []
         for i in c:
-            graf_list.append({i[0], i[1]})
-            # graf_list.append({'value':i[0], 'timestamp':i[1]})
-        print("graf_list: {}".format(graf_list))
-        return graf_list
+            # self.graf_list.append({i[0], i[1]})
+            self.graf_list.append({'value':i[0], 'timestamp':i[1]})
+        print("graf_list: {}".format(self.graf_list))
+        return self.graf_list
 
 
 #Tabel Observation
