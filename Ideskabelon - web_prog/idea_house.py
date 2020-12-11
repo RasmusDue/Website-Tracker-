@@ -8,6 +8,7 @@ from flask import url_for
 import matplotlib
 # matplotlib.use('TkAgg')
 import matplotlib.pyplot as plt
+# import emoji
 
 import io
 from flask import send_file
@@ -26,6 +27,10 @@ show = True
 @app.teardown_appcontext
 def close_connection(exception):
     data.close_connection()
+
+# print(emoji.emojize('Skalle Falle :thumbs_up:'))
+# print("\U0001f600")
+
 
 
 """
@@ -62,7 +67,6 @@ def profil():
 @app.route("/new_tracker")
 def new_tracker():
     return my_render("/new_tracker.html")
-
 
 @app.route("/nyide", methods=['POST'])
 def nyide():
@@ -122,7 +126,7 @@ def vis_tracker():
 
     else:
         tracker = []
-    return my_render("vis.html", trackers = tracker, show_but= show, type_var= var)
+    return my_render("vis.html", trackers = tracker, show_but= show, type_var= var, input_var= 2)
 
 @app.route("/update_table", methods=['GET'])
 def update_table():
@@ -201,7 +205,7 @@ def fig():
     print(x_list)
     print(y_list)
     plt.plot([1,2,3,4], [1,2,3,4])
-    plt.show()
+    # plt.show()
     img = io.BytesIO()
     plt.savefig(img)
     img.seek(0)

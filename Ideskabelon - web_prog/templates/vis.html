@@ -18,12 +18,23 @@
       {% if not show_but %}
       <img src="/fig" alt="" width="100%">
       <form class="form-control" action="/vistracker?id={{ i['id'] }}" method="post">
+        {% if input_var == 0 %}
         <label class="form-control-static" for="text">Indtast måledata:</label>
         <input type="{{ type_var }}" name="input" id="input" tabindex="1" class="form-control" placeholder="1234" value=""  required>
-        <!-- <a href="/update_table" method="post" >Send Data</a> -->
+        {% elif input_var == 2 %}
+        <label class="form-control-static" for="text">Vælg en emoji</label>
+        <br>
+        <input type="radio" id="Meget_Glad" name="emoji" value="0"  required>
+        <label for="Meget_Glad"><p>&#128512;</p></label>
+        <input type="radio" id="Glad" name="emoji" value="1"  required>
+        <label for="Glad"><p>&#128522;</p></label>
+        <input type="radio" id="Normal" name="emoji" value="2"  required>
+        <label for="cirkel">Cirkeldiagram</label>
+        {% endif %}
         <button class="form-control" type="submit" name="button">Send Data</button>
       </form>
       {% endif %}
+
 
     </div>
   </article>
